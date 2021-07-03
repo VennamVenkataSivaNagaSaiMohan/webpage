@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content
+    ="width=device-width, initial-scale=1.0">
+  <title>Dice Game</title>
+
+  <style>
+    .container {
+      width: 70%;
+      margin: auto;
+      text-align: center;
+    }
+
+    .dice {
+      text-align: center;
+      display: inline-block;
+      margin: 10px;
+    }
+
+    body {
+      background-color: #FFFF50;
+      margin: 35px;
+    }
+
+    h1 {
+      margin: 30px;
+      font-family: Verdana;
+      text-shadow: 5px 0 #232931;
+      font-size: 4.5rem;
+      color: #4ecca3;
+      text-align: center;
+    }
+
+    p {
+      font-size: 2rem;
+      color: #4ecca3;
+      font-family: "Indie Flower", cursive;
+    }
+
+    img {
+      width: 70%;
+    }
+
+    .bottom {
+      padding-top: 10px;
+    }
+
+    .butn {
+      background: #B22222;
+      font-family: Verdana;
+      border-radius: 7px;
+      color: #ffff;
+      font-size: 30px;
+      padding: 16px 25px 16px 25px;
+      text-decoration: none;
+    }
+
+    .butn:hover {
+      background: #232931;
+      text-decoration: none;
+    }
+  </style>
+  <script>
+    function setCookie(name, value, daysToLive) {
+        var cookie = name + "=" + encodeURIComponent(value);
+    
+        if(typeof daysToLive === "number") {
+            cookie += "; max-age=" + (daysToLive*24*60*60);
+    
+            document.cookie = cookie;
+        }
+    }
+    function getCookie(name) {
+        var cookieArr = document.cookie.split(";");
+        for(var i = 0; i < cookieArr.length; i++) {
+            var cookiePair = cookieArr[i].split("=");
+            if(name == cookiePair[0].trim()) {
+                return decodeURIComponent(cookiePair[1]);
+            }
+        }
+        return null;
+    }
+    function checkCookie() {
+        var firstName = getCookie("firstName");
+    
+        if(firstName != null) {
+            alert("Welcome again, " + firstName);
+        } else {
+            firstName = prompt("Please enter your first name:");
+            if(firstName != "" && firstName != null) {
+                setCookie("firstName", firstName, 1);
+            }
+        }
+    }
+    window.onload = checkCookie;
+  </script>
+</head>
+
+<body>
+  <a href="index.html#game"><button type="button" class="butn"onClick="home()" style="margin-left: 10px; margin-top: 10px">Go TO Home</button></a>
+  <div class="container">
+    <h1>DICE WITH PC</h1>
+
+    <div class="dice">
+      <p class="Player1">Player 1</p>
+      <img class="img1" src="dice6.png">
+    </div>
+
+    <div class="dice">
+      <p class="Player2">Player 2</p>
+      <img class="img2" src="dice6.png">
+    </div>
+  </div>
+
+  <div class="container bottom">
+    <button type="button" class="butn" onClick="editNames()">Edit Names </button>&emsp;
+    <button type="button" class="butn"onClick="rollTheDice()">Roll the Dice</button>
+  </div>
+
+
+  <script>
+
+    var player1 = "Player 1";
+    var player2 = "Player 2";
+
+    function editNames() {
+      player1 = prompt("Player1 name=");
+      player2 = prompt("Player2 name=");
+
+      document.querySelector("p.Player1").innerHTML = player1;
+              
+      document.querySelector("p.Player2").innerHTML = player2;
+    }
+
+    function rollTheDice() {
+      setTimeout(function () {
+        var randomNumber1 = Math.floor(Math.random() * 6) + 1;
+        var randomNumber2 = Math.floor(Math.random() * 6) + 1;
+        document.querySelector(".img1").setAttribute("src",
+          "dice" + randomNumber1 + ".png");
+
+        document.querySelector(".img2").setAttribute("src",
+          "dice" + randomNumber2 + ".png");
+
+        if (randomNumber1 === randomNumber2) {
+          document.querySelector("h1").innerHTML = "Draw!";
+        }
+
+        else if (randomNumber1 < randomNumber2) {
+          document.querySelector("h1").innerHTML
+            = (player2 + " WINS!");
+        }
+
+        else {
+          document.querySelector("h1").innerHTML
+            = (player1 + " WINS!");
+        }
+      }, 2600);
+    }
+  </script>
+</body>
+
+</html>
